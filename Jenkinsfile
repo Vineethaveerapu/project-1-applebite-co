@@ -8,7 +8,7 @@ pipeline {
     DOCKER_USERNAME = credentials('docker-hub-username')
     DOCKER_PASSWORD = credentials('docker-hub-password')
     DOCKER_IMAGE_NAME = "applebite"
-    DOCKER_IMAGE_TAG = 'latest'
+    DOCKER_IMAGE_TAG = "latest"
     DOCKERFILE_PATH = "Dockerfile"
   }
 
@@ -47,6 +47,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Deploy'
+        // Add your deployment steps here, e.g., "sh 'make deploy'"
       }
     }
   }
@@ -58,10 +59,12 @@ pipeline {
 
     success {
       echo "Build succeeded"
+      // Add success notification here, e.g., "slackSend message: 'Build succeeded'"
     }
 
     failure {
       echo 'Build failed'
+      // Add failure notification here, e.g., "slackSend message: 'Build failed'"
     }
   }
 }
