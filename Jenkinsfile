@@ -22,25 +22,14 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
-        echo 'build section'
-        try {
-          sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} -f ${DOCKERFILE_PATH} ."
-        } catch (err) {
-          currentBuild.result = 'FAILURE'
-          error "Failed to build Docker image: ${err}"
-        }
+        sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} -f ${DOCKERFILE_PATH} ."
       }
     }
 
     stage('Push Docker Image') {
       steps {
-        try {
-          sh "docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
-          sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-        } catch (err) {
-          currentBuild.result = 'FAILURE'
-          error "Failed to push Docker image: ${err}"
-        }
+        sh "docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+        sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
       }
     }
 
@@ -49,22 +38,6 @@ pipeline {
         echo 'Deploy'
         // Add your deployment steps here, e.g., "sh 'make deploy'"
       }
-    }
-  }
-
-  post {
-    always {
-      echo "Build ${currentBuild.result}"
-    }
-
-    success {
-      echo "Build succeeded"
-      // Add success notification here, e.g., "slackSend message: 'Build succeeded'"
-    }
-
-    failure {
-      echo 'Build failed'
-      // Add failure notification here, e.g., "slackSend message: 'Build failed'"
     }
   }
 }
