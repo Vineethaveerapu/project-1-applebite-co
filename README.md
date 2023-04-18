@@ -29,28 +29,4 @@ docker run \
   applebite
 ```
 
-
-```txt
-pipeline {
-    agent any
-
-    stages {
-        stage('git checkout') {
-            steps {
-              git credentialsId: 'github', url: 'https://github.com/Vineethaveerapu/project-1-applebite-co'
-            }
-        }
-        stage('build docker') {
-            steps {
-                docker image build -t applebite .
-            }
-        }
-        stage('publish docker image') {
-            steps {
-                docker push applebite
-            }
-        }
-    }
-}
-```
 https://github.dev/Vineethaveerapu/project-1-applebite-co
