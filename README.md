@@ -1,5 +1,7 @@
 # project-1-applebite-co
 
+Build a docker image on push to hit the master branch, and deploy the site to the test server.
+
 edureka project-1
 
 ```sh
@@ -50,6 +52,5 @@ pipeline {
         }
     }
 }
-
-
 ```
+https://github.dev/Vineethaveerapu/project-1-applebite-co
