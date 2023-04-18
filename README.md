@@ -3,7 +3,9 @@
 edureka project-1
 
 ```sh
-docker image build -t php8 .
+docker image build -t applebite .
+docker login
+docker push applebite
 ```
 
 ```sh
@@ -11,7 +13,7 @@ docker image build -t php8 .
 docker run \
   -it --rm \
   -p 8080:80 \
-  --name php8site \
+  --name applebitesite \
   -v "$PWD/website":/var/www/html \
   php8
 ```
@@ -21,6 +23,33 @@ docker run \
 docker run \
   -d \
   -p 8080:80 \
-  --name php8site \
-  php8
+  --name applebitesite \
+  applebite
+```
+
+
+```txt
+pipeline {
+    agent any
+
+    stages {
+        stage('git checkout') {
+            steps {
+              git credentialsId: 'github', url: 'https://github.com/Vineethaveerapu/project-1-applebite-co'
+            }
+        }
+        stage('build docker') {
+            steps {
+                docker image build -t applebite .
+            }
+        }
+        stage('publish docker image') {
+            steps {
+                docker push applebite
+            }
+        }
+    }
+}
+
+
 ```
